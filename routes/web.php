@@ -6,10 +6,10 @@ use App\Http\Controllers\BookVehicleController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
-// Welcome Page Route
+// Main Welcome Page Route
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome'); // Ensure the welcome route is named
 
 // Dashboard Route with Middleware (auth and verified)
 Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -17,7 +17,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 // Authenticated User Routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     // Profile Management Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,9 +30,17 @@ Route::middleware('auth')->group(function () {
     Route::put('/vehicles/{id}/increment', [VehicleController::class, 'increment'])->name('vehicles.increment');
     Route::put('/vehicles/{id}/decrement', [VehicleController::class, 'decrement'])->name('vehicles.decrement');
 
-
     // Cancel Booked Vehicle
     Route::post('/vehicles/{id}/cancel', [VehicleController::class, 'cancel'])->name('vehicles.cancel');
+
+    // Routes for Available and Booked Vehicles Pages
+    Route::get('/dashboard/available', [DashboardController::class, 'availableVehicles'])
+        ->name('dashboard.available');
+    Route::get('/dashboard/booked', [DashboardController::class, 'bookedVehicles'])
+        ->name('dashboard.booked');
+
+    // Cancel Booked Vehicle using DELETE Method
+    Route::delete('/vehicles/{id}/cancel', [VehicleController::class, 'cancel'])->name('vehicles.cancel');
 });
 
 // Include Auth Routes (like login, registration, etc.)
