@@ -84,11 +84,11 @@
             <h2 class="text-4xl font-bold mb-4">Ready to Hit the Road?</h2>
             <p class="text-xl mb-8">Book your perfect vehicle now and start your journey!</p>
             <a
-    href="{{ auth()->check() ? route('dashboard') : route('login') }}"
-    class="bg-white text-red-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-300 inline-block"
->
-    Book Now
-</a>
+              href="{{ auth()->check() ? route('dashboard') : route('login') }}"
+              class="bg-white text-red-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-300 inline-block"
+            >
+              Book Now
+            </a>
 
         </div>
     </section>

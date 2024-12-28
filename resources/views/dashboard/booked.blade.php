@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        
+
         <div class="flex mt-4 space-x-4">
             <!-- Available Vehicles Button -->
             <a href="{{ route('dashboard.available') }}"
@@ -25,7 +25,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($userBookedVehicles as $bookedVehicle)
                         <div class="bg-orange-500 shadow-lg rounded-lg overflow-hidden">
-                            <img src="{{ asset('storage/'.$bookedVehicle->vehicle->image) }}" alt="{{ $bookedVehicle->vehicle->name }}" class="w-full h-40 object-cover">
+                            <img src="{{ asset('images/'.$bookedVehicle->vehicle->image) }}" alt="{{ $bookedVehicle->vehicle->name }}" class="w-full h-40 object-cover">
                             <div class="p-4">
                                 <h4 class="font-semibold text-lg text-black">{{ $bookedVehicle->vehicle->name }}</h4>
                                 <p class="text-orange-200">Type: {{ $bookedVehicle->vehicle->type }}</p>
