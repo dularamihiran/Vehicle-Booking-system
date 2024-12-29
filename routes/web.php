@@ -9,15 +9,29 @@ use Illuminate\Support\Facades\Route;
 // Main Welcome Page Route
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome'); // Ensure the welcome route is named
+})->name('welcome');
 
 // Dashboard Route with Middleware (auth and verified)
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])  // Ensures the user is authenticated and verified
+    ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-// Authenticated User Routes
-Route::middleware(['auth'])->group(function () {
+// Admin-specific Routes (Protected with 'admin' role)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Admin Dashboard Route
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
+
+    // Example of an admin-only route (Add your admin-specific routes here)
+    // Route::get('/admin/someadminroute', [AdminController::class, 'someMethod']);
+});
+
+// User-specific Routes (Protected with 'user' role)
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // User Dashboard Route
+    Route::get('/user/dashboard', [DashboardController::class, 'index'])
+        ->name('user.dashboard');
+
     // Profile Management Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
